@@ -3,6 +3,8 @@ body {
     max-width: 900px;
     margin: 0 auto;
     padding: 1rem;
+    background-color: #222222;
+    color: #ffffff;
 }
 
 img {
@@ -16,6 +18,177 @@ h1, h2, h3 {
     margin-bottom: 0.5rem;
 }
 
-p{
+h1 {
+    color: #ff9900;
+}
+
+h2 {
+    color: #ffcc00;
+}
+
+h3 {
+    color: #cccccc;
+}
+
+p {
     margin-bottom: 1rem;
+    color: #eeeeee;
+}
+nav {
+    margin-bottom: 2rem;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+}
+
+nav li {
+    margin-right: 1rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: #cccccc;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #ff9900;
+}
+
+/* Existing CSS styles */
+
+header {
+    text-align: center;
+}
+
+header img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.intro {
+    display: flex;
+    align-items: center;
+}
+
+.intro img {
+    width: 200px;
+    height: auto;
+    margin-right: 2rem;
+}
+
+header {
+    text-align: center;
+}
+
+header img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+figure {
+    text-align: center;
+}
+
+figcaption {
+    margin-top: 1rem;
+}
+
+figcaption a {
+    text-decoration: none;
+    color: #ffcc00;
+}
+
+figcaption a:hover {
+    color: #ff9900;
+}
+
+
+.intro div {
+    margin-left: 2rem;
+}
+
+.code-container {
+    position: relative;
+    margin-top: 2rem;
+}
+
+/* Existing CSS styles */
+
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #444444;
+    padding: 0.5rem;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.code-header span {
+    color: #bbbbbb;
+    font-family: "Courier New", monospace;
+}
+
+.copy-button {
+    background-color: transparent;
+    color: #bbbbbb;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+}
+
+.copy-button:hover {
+    color: #ffcc00;
+}
+
+code {
+    display: block;
+    background-color: #000000;
+    padding: 1rem;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: #dcdcdc;
+    font-family: "Courier New", monospace;
+    white-space: pre-wrap;
+}
+
+/* Visual Studio Code default color scheme */
+code .keyword {
+    color: #569cd6;
+}
+
+code .function {
+    color: #dcdcaa;
+}
+
+code .variable {
+    color: #9cdcfe;
+}
+
+code .string {
+    color: #ce9178;
+}
+
+code .comment {
+    color: #608b4e;
 }
