@@ -53,6 +53,34 @@ function showGameInfo(gameNumber) {
     gameInfoLine.style.display = "none";
     gameInfoText.style.display = "none";
   }
+
+  function loadGame(gameNumber) {
+    hideSections();
+    var gameContent = document.getElementById("gameContent");
+    gameContent.style.display = "block";
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState === 4 && this.status === 200) {
+        gameContent.innerHTML = this.responseText;
+      }
+    };
+    xhttp.open("GET", "game" + gameNumber + ".html", true);
+    xhttp.send();
+  }
+  
+  // Update the hideSections function to hide the gameContent div
+  function hideSections() {
+    var sections = [
+      document.getElementById("picturesSection"),
+      document.getElementById("aboutSection"),
+      document.getElementById("resumeSection"),
+      document.getElementById("gameContent"),
+    ];
+  
+    sections.forEach(function(section) {
+      section.style.display = "none";
+    });
+  }
   
   
     
