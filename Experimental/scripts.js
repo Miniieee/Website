@@ -1,16 +1,54 @@
 document.getElementById('showPicturesBtn').addEventListener('click', function() {
-    const picturesSection = document.getElementById('picturesSection');
-    picturesSection.style.display = 'block';
+    //const picturesSection = document.getElementById('picturesSection');
+    //picturesSection.style.display = 'block';
   });
 
-function showGameInfo(gameNumber) {
-    var line = document.getElementById("game-info-line");
-    var text = document.getElementById("game-info-text");
+  function showGameInfo(gameNumber) {
+    //var gameInfoLine = document.getElementById("game-info-line");
   
-    line.style.display = "block";
-    text.style.display = "block";
-    text.textContent = "This is game number " + gameNumber;
+    //gameInfoLine.style.display = "block";
+    fetchInfoGame(gameNumber);
   }
+
+  function fetchInfoGame(gameNumber) {
+    var gameInfo = document.getElementById("game-info");
+  
+    fetch(`game${gameNumber}.html`)
+      .then(response => {
+        if (response.ok) {
+          return response.text();
+        } else {
+          throw new Error("Failed to fetch game content");
+        }
+      })
+      .then(content => {
+        gameInfo.innerHTML = content;
+      })
+      .catch(error => {
+        console.error("Error fetching game content:", error);
+      });
+  }
+
+  function fetchInfo(buttonName) {
+    var divInfo = document.getElementById("info");
+    console.log(buttonName)
+    fetch(`game${buttonName}.html`)
+      .then(response => {
+        if (response.ok) {
+          return response.text();
+        } else {
+          throw new Error("Failed to fetch game content");
+        }
+      })
+      .then(content => {
+        divInfo.innerHTML = content;
+      })
+      .catch(error => {
+        console.error("Error fetching game content:", error);
+      });
+  }
+  
+  
 
   function togglePortfolio() {
     var picturesSection = document.getElementById("picturesSection");
@@ -81,6 +119,30 @@ function showGameInfo(gameNumber) {
       section.style.display = "none";
     });
   }
+
+  function showPictures() {
+    var picturesSection = document.getElementById("picturesSection");
+    if (picturesSection.style.display === "none") {
+      hideSections();
+      picturesSection.style.display = "block";
+    } else {
+      picturesSection.style.display = "none";
+    }
+  }
+  
+  function hideSections() {
+    var sections = [
+      document.getElementById("picturesSection"),
+      document.getElementById("aboutSection"),
+      document.getElementById("resumeSection"),
+      document.getElementById("gameContent"),
+    ];
+  
+    sections.forEach(function (section) {
+      section.style.display = "none";
+    });
+  }
+  
   
   
     

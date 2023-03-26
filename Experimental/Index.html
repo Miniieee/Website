@@ -20,36 +20,24 @@
     <p>Hello and welcome to my website! My name is Tamas and I am a passionate game developer with experience in both mobile and VR game development. I have a strong background in coding and building systems, which allows me to create efficient and engaging gameplay experiences. I have published two casual mobile games on the Android platform and am currently working on a VR game. While my strengths lie in programming and prototyping, I recognize that level design and art are areas where I can improve. I am always looking to learn and grow as a developer, and I am excited to see where my skills will take me in the industry. Thank you for visiting my website, and please feel free to contact me if you have any questions!</p>
     <hr>
     <div class="buttons">
-        <button id="showPicturesBtn" onclick="togglePortfolio()">Portfolio</button>
-        <button onclick="toggleResume()">Resume</button>
-        <button onclick="toggleAbout()">About</button>
+        <button id="showPicturesBtn" onclick="fetchInfo(`portfolio`)">Portfolio</button>
+        <button onclick="fetchInfo(`resume`)">Resume</button>
+        <button onclick="fetchInfo(`about`)">About</button>
     </div>      
-    <hr>
-    <div class="pictures picture-container" id="picturesSection" style="display:none;">
-        <button onclick="showGameInfo(1)"><img src="/img/rockpaper.png" alt="Picture 1"></button>
-        <button onclick="showGameInfo(2)"><img src="/img/zombietd.png" alt="Picture 2"></button>
-        <button onclick="showGameInfo(3)"><img src="/img/alien.png" alt="Picture 3"></button>
-        <button onclick="showGameInfo(4)"><img src="/img/survivor.png" alt="Picture 4"></button>
-        <button onclick="showGameInfo(5)"><img src="/img/stickman.png" alt="Picture 5"></button>
-        <button onclick="showGameInfo(6)"><img src="/img/vrtd.png" alt="Picture 6"></button>
+    <div id="info">
+        
     </div>
     <div class="about-section" id="aboutSection" style="display:none;">
         <div class="about-content">
-          <img class="about-image" src="path/to/your/image.jpg" alt="Your Image Description">
+          <img class="about-image" src="/img/face.png" alt="Your Image Description">
           <p class="about-description">Your description goes here. You can write a few lines about yourself, your background, and your interests.</p>
         </div>
         <hr>
        </div>
-      </div>
-      
-      
       <div class="resume-section" id="resumeSection" style="display:none;">
         
         <p>This is my resume.</p>
       </div>
-      
-    <hr id="game-info-line" style="display: none;">
-    <p id="game-info-text" style="display: none;"></p>
   </div>
   <script src="scripts.js"></script>
 </body>
