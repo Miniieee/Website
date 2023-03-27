@@ -132,6 +132,31 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  .resume-section ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .resume-section li {
+    margin: 0 10px;
+  }
+  
+  .image-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .medium-image {
+    width: 200px;
+    height: auto;
+  }
+  
+
+  
   
     
   
