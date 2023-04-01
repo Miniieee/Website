@@ -15,6 +15,10 @@ body {
   h1 {
     color: #f1c40f;
   }
+
+  h2 {
+    color: #f1c40f;
+  }
   
   img {
     max-width: 100%;
@@ -41,7 +45,7 @@ body {
   }
   
   p {
-    color: #ddd;
+    color: #dddddd;
   }
   
   .buttons {
@@ -153,6 +157,36 @@ body {
   .medium-image {
     width: 200px;
     height: auto;
+  }
+
+  .game-info {
+    text-align: left;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    color: #FFD700;
+    font-size: 1.3em; /* Adjust the size according to your preference */
+  }
+  
+  h3 {
+    color: #dddddd;
+    font-weight: bold;
+    font-size: 1.2em; /* Adjust the size according to your preference */
+  }
+
+  .inline-heading {
+    display: inline;
+    color: #dddddd;
+    font-weight: bold;
+    font-size: 1em;
+  }
+  
+  .inline-text {
+    display: inline;
+    color: #dddddd; /* Adjust the color according to your preference */
+    font-size: 1em; /* Adjust the size according to your preference */
   }
   
 
