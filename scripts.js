@@ -154,7 +154,8 @@ window.onload = function() {
 function fetchYouTubeVideos() {
   // Fetch YouTube videos dynamically using YouTube Data API or any other method
   // For demonstration, let's assume you have an array of video IDs
-  var videoIds = ['VIDEO_ID_1', 'VIDEO_ID_2', 'VIDEO_ID_3'];
+  var videoIds = ['XjRNWH8Eazo?si=LnvEbySk2sVRSq-D', 'xHcclOnvWxc?si=MBhtUeZJljY834x1', '7hKEU_v8WBs?si=cwqk0vyROPF44Xcr', '3J9FpXqRoos?si=rqMGOsGEphRnZ_QN', 'XjRNWH8Eazo?si=LnvEbySk2sVRSq-D', 'TJ8yk5vVwI0?si=eQcaeOYlacj1dyS0', 'nLn4DO1oBe8?si=gLe-rlNpvQwCPKB9', 'JAfic9g6ssQ?si=GaFchKb6-tlOkZ_h'];
+  var videoListId = ['&list=UULFDvs-QQfJ6vrNizDoTw8_kQ']
   maxSlides = videoIds.length;
 
   // Get the YouTube slider container
@@ -163,7 +164,7 @@ function fetchYouTubeVideos() {
   // Loop through the video IDs and create iframe elements for each video
   videoIds.forEach(function(videoId) {
     var iframe = document.createElement('iframe');
-    iframe.src = 'https://www.youtube.com/embed/' + videoId;
+    iframe.src = 'https://www.youtube.com/embed/' + videoId + videoListId;
     iframe.width = '560';
     iframe.height = '315';
     iframe.frameBorder = '0';
