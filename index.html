@@ -19,6 +19,19 @@
     <hr>
     <p>Hello and welcome to my website! My name is Tamas and I am a passionate game developer with experience in both mobile and VR game development. I have a strong background in coding and building systems, which allows me to create efficient and engaging gameplay experiences. I have published two casual mobile games on the Android platform and am currently working on a VR game. While my strengths lie in programming and prototyping, I recognize that level design and art are areas where I can improve. I am always looking to learn and grow as a developer, and I am excited to see where my skills will take me in the industry. Thank you for visiting my website, and please feel free to contact me if you have any questions!</p>
     <hr>
+
+    <div class="slider-nav">
+      <button class="prev" onclick="moveSlider(-1)">&#10094;</button>
+      <button class="next" onclick="moveSlider(1)">&#10095;</button>
+    </div>
+    
+    <!-- YouTube video slider container -->
+    <div id="youtubeSlider" class="youtube-slider">
+      <!-- Videos will be dynamically added here -->
+    </div>
+
+    <hr>
+
     <div class="buttons">
         <button id="showPicturesBtn" onclick="fetchInfo(`portfolio`)">Portfolio</button>
         <button onclick="fetchInfo(`resume`)">Resume</button>

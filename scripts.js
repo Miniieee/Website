@@ -142,6 +142,57 @@ document.getElementById('showPicturesBtn').addEventListener('click', function() 
       section.style.display = "none";
     });
   }
+
+  // JavaScript for YouTube video slider with navigation arrows
+var currentSlide = 0;
+var maxSlides = 0;
+
+window.onload = function() {
+  fetchYouTubeVideos();
+};
+
+function fetchYouTubeVideos() {
+  // Fetch YouTube videos dynamically using YouTube Data API or any other method
+  // For demonstration, let's assume you have an array of video IDs
+  var videoIds = ['VIDEO_ID_1', 'VIDEO_ID_2', 'VIDEO_ID_3'];
+  maxSlides = videoIds.length;
+
+  // Get the YouTube slider container
+  var youtubeSlider = document.getElementById('youtubeSlider');
+
+  // Loop through the video IDs and create iframe elements for each video
+  videoIds.forEach(function(videoId) {
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/' + videoId;
+    iframe.width = '560';
+    iframe.height = '315';
+    iframe.frameBorder = '0';
+    iframe.allowFullscreen = true;
+    youtubeSlider.appendChild(iframe);
+  });
+
+  // Show the first video initially
+  showSlide(currentSlide);
+}
+
+function moveSlider(direction) {
+  currentSlide += direction;
+  if (currentSlide < 0) {
+    currentSlide = maxSlides - 1;
+  } else if (currentSlide >= maxSlides) {
+    currentSlide = 0;
+  }
+  showSlide(currentSlide);
+}
+
+function showSlide(index) {
+  var slides = document.querySelectorAll('.youtube-slider iframe');
+  for (var i = 0; i < slides.length; i++) {
+    slides[i].style.display = 'none';
+  }
+  slides[index].style.display = 'block';
+}
+
   
   
   
