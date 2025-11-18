@@ -1,57 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tamas Bagyinszki | Game Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <title>TamasBagyinszki</title>
 </head>
+
 <body>
-  <div class="container">
-    <h1>Tamas Bagyinszki</h1>
-    <img src="img/face.png" alt="Your Image Description">
-    <div class="social-icons">
-      <a href="mailto:bagyi.tomi93@gmail.com" target="_blank"><img src="img/email-3-256.png" ></a>
-      <a href="https://www.youtube.com/channel/UCDvs-QQfJ6vrNizDoTw8_kQ" target="_blank"><img src="img/youtube-256.png" ></a>
-      <a href="https://github.com/Miniieee" target="_blank"><img src="img/github-9-256.png" ></a>
-      <a href="https://itch.io/profile/miniiee" target="_blank"><img src="img/icons8-itch-io-200.png" ></a>
-    </div>
-    <hr>
-    <p>Hello and welcome to my website! My name is Tamas and I am a passionate game developer with experience in both mobile and VR game development. I have a strong background in coding and building systems, which allows me to create efficient and engaging gameplay experiences. I have published two casual mobile games on the Android platform and am currently working on a VR game. While my strengths lie in programming and prototyping, I recognize that level design and art are areas where I can improve. I am always looking to learn and grow as a developer, and I am excited to see where my skills will take me in the industry. Thank you for visiting my website, and please feel free to contact me if you have any questions!</p>
-    <hr>
+  <div class="bg-animation"></div>
 
-    <div class="slider-nav">
-      <button class="prev" onclick="moveSlider(-1)">&#10094;</button>
-      <button class="next" onclick="moveSlider(1)">&#10095;</button>
-    </div>
-    
-    <!-- YouTube video slider container -->
-    <div id="youtubeSlider" class="youtube-slider">
-      <!-- Videos will be dynamically added here -->
-    </div>
-
-    <hr>
-
-    <div class="buttons">
-        <button id="showPicturesBtn" onclick="fetchInfo(`portfolio`)">Portfolio</button>
-        <button onclick="fetchInfo(`resume`)">Resume</button>
-        <button onclick="fetchInfo(`about`)">About</button>
-    </div>      
-    <div id="info">
-        
-    </div>
-    <div class="about-section" id="aboutSection" style="display:none;">
-        <div class="about-content">
-          <img class="about-image" src="/img/face.png" alt="Your Image Description">
-          <p class="about-description">Your description goes here. You can write a few lines about yourself, your background, and your interests.</p>
-        </div>
-        <hr>
-       </div>
-      <div class="resume-section" id="resumeSection" style="display:none;">
-        
-        <p>This is my resume.</p>
+  <main class="main-container">
+    <!-- Header Section -->
+    <header class="profile-header fade-in">
+      <div class="profile-img-container">
+        <img src="img/face.png" alt="Tamas Bagyinszki" class="profile-pic">
       </div>
-  </div>
+      <h1>Tamas Bagyinszki</h1>
+      <p class="subtitle">Game Developer | Mobile & VR Specialist</p>
+
+      <div class="social-icons">
+        <a href="mailto:bagyi.tomi93@gmail.com" aria-label="Email"><img src="img/email-3-256.png" alt="Email"></a>
+        <a href="https://www.youtube.com/channel/UCDvs-QQfJ6vrNizDoTw8_kQ" target="_blank" aria-label="YouTube"><img
+            src="img/youtube-256.png" alt="YouTube"></a>
+        <a href="https://github.com/Miniieee" target="_blank" aria-label="GitHub"><img src="img/github-9-256.png"
+            alt="GitHub"></a>
+        <a href="https://itch.io/profile/miniiee" target="_blank" aria-label="Itch.io"><img
+            src="img/icons8-itch-io-200.png" alt="Itch.io"></a>
+      </div>
+    </header>
+
+    <!-- YouTube Slider Section -->
+    <section id="youtube-section" class="glass-panel fade-in">
+      <h2><span class="accent-text">Featured</span> Videos</h2>
+      <div class="slider-wrapper">
+        <button class="nav-btn prev" onclick="moveSlider(-1)">&#10094;</button>
+        <div id="youtubeSlider" class="youtube-slider">
+          <!-- Videos injected via JS -->
+        </div>
+        <button class="nav-btn next" onclick="moveSlider(1)">&#10095;</button>
+      </div>
+    </section>
+
+    <!-- Professional Works Section -->
+    <section id="professional-works" class="glass-panel fade-in">
+      <h2><span class="accent-text">Professional</span> Works</h2>
+      <div class="works-grid">
+        <!-- Example Work Item 1 -->
+        <div class="work-card" onclick="openWork('work1')">
+          <div class="work-icon">🎮</div>
+          <h3>VR Experience</h3>
+          <p>Immersive VR simulation developed for...</p>
+        </div>
+        <!-- Example Work Item 2 -->
+        <div class="work-card" onclick="openWork('work2')">
+          <div class="work-icon">📱</div>
+          <h3>Mobile Title</h3>
+          <p>Casual mobile game with 10k+ downloads...</p>
+        </div>
+        <!-- Placeholder for dynamic content if needed -->
+      </div>
+      <div id="work-details-container" class="details-container" style="display:none;">
+        <button class="close-btn" onclick="closeWork()">×</button>
+        <div id="work-content"></div>
+      </div>
+    </section>
+
+    <!-- Portfolio (Games) Section -->
+    <section id="portfolio-section" class="glass-panel fade-in">
+      <h2><span class="accent-text">Personal</span> Projects</h2>
+
+      <!-- Game Selection Grid -->
+      <div id="games-grid" class="games-grid">
+        <!-- These buttons will be styled as cards -->
+        <button class="game-card" onclick="loadGame(1)">
+          <span>Game 1</span>
+        </button>
+        <button class="game-card" onclick="loadGame(2)">
+          <span>Game 2</span>
+        </button>
+        <button class="game-card" onclick="loadGame(3)">
+          <span>Game 3</span>
+        </button>
+        <button class="game-card" onclick="loadGame(4)">
+          <span>Game 4</span>
+        </button>
+        <button class="game-card" onclick="loadGame(5)">
+          <span>Game 5</span>
+        </button>
+        <button class="game-card" onclick="loadGame(6)">
+          <span>Game 6</span>
+        </button>
+      </div>
+
+      <!-- Dynamic Game Content Area -->
+      <div id="gameContent" class="details-container" style="display:none;">
+        <button class="close-btn" onclick="closeGame()">×</button>
+        <div id="loaded-game-html"></div>
+      </div>
+    </section>
+
+    <!-- About & Resume Section -->
+    <section id="info-section" class="glass-panel fade-in">
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('about')">About Me</button>
+        <button class="tab-btn" onclick="switchTab('resume')">Resume</button>
+      </div>
+
+      <div id="about-content" class="tab-content active">
+        <div class="about-layout">
+          <p>Hello and welcome to my website! My name is Tamas and I am a passionate game developer with experience in
+            both mobile and VR game development. I have a strong background in coding and building systems, which allows
+            me to create efficient and engaging gameplay experiences. I have published two casual mobile games on the
+            Android platform and am currently working on a VR game. While my strengths lie in programming and
+            prototyping, I recognize that level design and art are areas where I can improve. I am always looking to
+            learn and grow as a developer, and I am excited to see where my skills will take me in the industry.</p>
+        </div>
+      </div>
+
+      <div id="resume-content" class="tab-content" style="display:none;">
+        <!-- Content will be loaded here or static -->
+        <div class="resume-placeholder">
+          <p>Resume content loading...</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Tamas Bagyinszki. All rights reserved.</p>
+    </footer>
+  </main>
+
   <script src="scripts.js"></script>
 </body>
+
 </html>
