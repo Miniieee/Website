@@ -1,200 +1,154 @@
-document.getElementById('showPicturesBtn').addEventListener('click', function() {
-    //const picturesSection = document.getElementById('picturesSection');
-    //picturesSection.style.display = 'block';
-  });
+(function () {
+  const navToggle = document.querySelector(".nav-toggle");
+  const navLinks = document.querySelector(".nav-links");
 
-  function showGameInfo(gameNumber) {
-    //var gameInfoLine = document.getElementById("game-info-line");
-  
-    //gameInfoLine.style.display = "block";
-    fetchInfoGame(gameNumber);
-  }
-
-  function fetchInfoGame(gameNumber) {
-    var gameInfo = document.getElementById("game-info");
-  
-    fetch(`game${gameNumber}.html`)
-      .then(response => {
-        if (response.ok) {
-          return response.text();
-        } else {
-          throw new Error("Failed to fetch game content");
-        }
-      })
-      .then(content => {
-        gameInfo.innerHTML = content;
-      })
-      .catch(error => {
-        console.error("Error fetching game content:", error);
-      });
-  }
-
-  function fetchInfo(buttonName) {
-    var divInfo = document.getElementById("info");
-    console.log(buttonName)
-    fetch(`game${buttonName}.html`)
-      .then(response => {
-        if (response.ok) {
-          return response.text();
-        } else {
-          throw new Error("Failed to fetch game content");
-        }
-      })
-      .then(content => {
-        divInfo.innerHTML = content;
-      })
-      .catch(error => {
-        console.error("Error fetching game content:", error);
-      });
-  }
-  
-  
-
-  function togglePortfolio() {
-    var picturesSection = document.getElementById("picturesSection");
-    var gameInfoLine = document.getElementById("game-info-line");
-    var gameInfoText = document.getElementById("game-info-text");
-    hideSections();
-    
-    if (picturesSection.style.display === "none") {
-      picturesSection.style.display = "block";
-    }
-  }
-  
-  function toggleResume() {
-    var resumeSection = document.getElementById("resumeSection");
-    hideSections();
-  
-    if (resumeSection.style.display === "none") {
-      resumeSection.style.display = "block";
-    }
-  }
-  
-  function toggleAbout() {
-    var aboutSection = document.getElementById("aboutSection");
-    hideSections();
-  
-    if (aboutSection.style.display === "none") {
-      aboutSection.style.display = "block";
-    }
-  }
-  
-  function hideSections() {
-    var sections = [document.getElementById("picturesSection"), document.getElementById("aboutSection"), document.getElementById("resumeSection")];
-    var gameInfoLine = document.getElementById("game-info-line");
-    var gameInfoText = document.getElementById("game-info-text");
-  
-    sections.forEach(function(section) {
-      section.style.display = "none";
+  if (navToggle && navLinks) {
+    navToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("is-open");
+      navToggle.setAttribute("aria-expanded", String(isOpen));
+      document.body.classList.toggle("nav-open", isOpen);
     });
-  
-    gameInfoLine.style.display = "none";
-    gameInfoText.style.display = "none";
-  }
 
-  function loadGame(gameNumber) {
-    hideSections();
-    var gameContent = document.getElementById("gameContent");
-    gameContent.style.display = "block";
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState === 4 && this.status === 200) {
-        gameContent.innerHTML = this.responseText;
+    navLinks.addEventListener("click", (event) => {
+      if (event.target instanceof HTMLAnchorElement) {
+        navLinks.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("nav-open");
       }
-    };
-    xhttp.open("GET", "game" + gameNumber + ".html", true);
-    xhttp.send();
-  }
-  
-  // Update the hideSections function to hide the gameContent div
-  function hideSections() {
-    var sections = [
-      document.getElementById("picturesSection"),
-      document.getElementById("aboutSection"),
-      document.getElementById("resumeSection"),
-      document.getElementById("gameContent"),
-    ];
-  
-    sections.forEach(function(section) {
-      section.style.display = "none";
     });
   }
 
-  function showPictures() {
-    var picturesSection = document.getElementById("picturesSection");
-    if (picturesSection.style.display === "none") {
-      hideSections();
-      picturesSection.style.display = "block";
-    } else {
-      picturesSection.style.display = "none";
+  class Slideshow {
+    constructor(root) {
+      this.root = root;
+      this.slides = Array.from(root.querySelectorAll(".slide"));
+      this.prevButton = root.querySelector("[data-slide-prev]");
+      this.nextButton = root.querySelector("[data-slide-next]");
+      this.dotsContainer = root.querySelector("[data-slide-dots]");
+      this.emptyMessage = root.querySelector(".empty-slideshow");
+      this.index = 0;
+      this.timer = null;
+      this.interval = Number(root.dataset.interval) || 5000;
+      this.reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      this.init();
+    }
+
+    init() {
+      if (this.slides.length === 0) {
+        this.setEmptyState();
+        return;
+      }
+
+      this.buildDots();
+      this.bindEvents();
+      this.show(0);
+
+      if (!this.reducedMotion && this.slides.length > 1) {
+        this.start();
+      }
+    }
+
+    setEmptyState() {
+      if (this.prevButton) this.prevButton.hidden = true;
+      if (this.nextButton) this.nextButton.hidden = true;
+      if (this.dotsContainer) this.dotsContainer.hidden = true;
+      if (this.emptyMessage) this.emptyMessage.hidden = false;
+    }
+
+    buildDots() {
+      if (!this.dotsContainer) return;
+
+      this.dotsContainer.innerHTML = "";
+      this.dots = this.slides.map((slide, slideIndex) => {
+        const button = document.createElement("button");
+        const image = slide.querySelector("img");
+        button.type = "button";
+        button.className = "slide-dot";
+        button.setAttribute("aria-label", `Show ${image ? image.alt : "Immersify image"} ${slideIndex + 1}`);
+        button.addEventListener("click", () => {
+          this.show(slideIndex);
+          this.restart();
+        });
+        this.dotsContainer.appendChild(button);
+        return button;
+      });
+    }
+
+    bindEvents() {
+      if (this.prevButton) {
+        this.prevButton.addEventListener("click", () => {
+          this.previous();
+          this.restart();
+        });
+      }
+
+      if (this.nextButton) {
+        this.nextButton.addEventListener("click", () => {
+          this.next();
+          this.restart();
+        });
+      }
+
+      this.root.addEventListener("mouseenter", () => this.stop());
+      this.root.addEventListener("mouseleave", () => this.start());
+      this.root.addEventListener("focusin", () => this.stop());
+      this.root.addEventListener("focusout", () => this.start());
+
+      this.root.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          this.previous();
+          this.restart();
+        }
+
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          this.next();
+          this.restart();
+        }
+      });
+    }
+
+    show(nextIndex) {
+      this.index = (nextIndex + this.slides.length) % this.slides.length;
+
+      this.slides.forEach((slide, slideIndex) => {
+        const isActive = slideIndex === this.index;
+        slide.classList.toggle("is-active", isActive);
+        slide.setAttribute("aria-hidden", String(!isActive));
+      });
+
+      if (this.dots) {
+        this.dots.forEach((dot, dotIndex) => {
+          dot.setAttribute("aria-current", String(dotIndex === this.index));
+        });
+      }
+    }
+
+    next() {
+      this.show(this.index + 1);
+    }
+
+    previous() {
+      this.show(this.index - 1);
+    }
+
+    start() {
+      if (this.reducedMotion || this.slides.length <= 1 || this.timer) return;
+      this.timer = window.setInterval(() => this.next(), this.interval);
+    }
+
+    stop() {
+      window.clearInterval(this.timer);
+      this.timer = null;
+    }
+
+    restart() {
+      this.stop();
+      this.start();
     }
   }
-  
-  function hideSections() {
-    var sections = [
-      document.getElementById("picturesSection"),
-      document.getElementById("aboutSection"),
-      document.getElementById("resumeSection"),
-      document.getElementById("gameContent"),
-    ];
-  
-    sections.forEach(function (section) {
-      section.style.display = "none";
-    });
-  }
 
-  // JavaScript for YouTube video slider with navigation arrows
-var currentSlide = 0;
-var maxSlides = 0;
-
-window.onload = function() {
-  fetchYouTubeVideos();
-};
-
-function fetchYouTubeVideos() {
-  // Fetch YouTube videos dynamically using YouTube Data API or any other method
-  // For demonstration, let's assume you have an array of video IDs
-  var videoIds = ['XjRNWH8Eazo?si=LnvEbySk2sVRSq-D', 'xHcclOnvWxc?si=MBhtUeZJljY834x1', '7hKEU_v8WBs?si=cwqk0vyROPF44Xcr', '3J9FpXqRoos?si=rqMGOsGEphRnZ_QN', 'XjRNWH8Eazo?si=LnvEbySk2sVRSq-D', 'TJ8yk5vVwI0?si=eQcaeOYlacj1dyS0', 'nLn4DO1oBe8?si=gLe-rlNpvQwCPKB9', 'JAfic9g6ssQ?si=GaFchKb6-tlOkZ_h'];
-  var videoListId = ['&list=UULFDvs-QQfJ6vrNizDoTw8_kQ']
-  maxSlides = videoIds.length;
-
-  // Get the YouTube slider container
-  var youtubeSlider = document.getElementById('youtubeSlider');
-
-  // Loop through the video IDs and create iframe elements for each video
-  videoIds.forEach(function(videoId) {
-    var iframe = document.createElement('iframe');
-    iframe.src = 'https://www.youtube.com/embed/' + videoId + videoListId;
-    iframe.width = '560';
-    iframe.height = '315';
-    iframe.frameBorder = '0';
-    iframe.allowFullscreen = true;
-    youtubeSlider.appendChild(iframe);
-  });
-
-  // Show the first video initially
-  showSlide(currentSlide);
-}
-
-function moveSlider(direction) {
-  currentSlide += direction;
-  if (currentSlide < 0) {
-    currentSlide = maxSlides - 1;
-  } else if (currentSlide >= maxSlides) {
-    currentSlide = 0;
-  }
-  showSlide(currentSlide);
-}
-
-function showSlide(index) {
-  var slides = document.querySelectorAll('.youtube-slider iframe');
-  for (var i = 0; i < slides.length; i++) {
-    slides[i].style.display = 'none';
-  }
-  slides[index].style.display = 'block';
-}
-
-  
-  
-  
-    
+  document.querySelectorAll("[data-slideshow]").forEach((root) => new Slideshow(root));
+})();
